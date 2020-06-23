@@ -7,8 +7,6 @@
 #
 #############################################################################
 
-import json
-import math
 import os.path
 
 try:
@@ -249,7 +247,7 @@ class Psu(PsuBase):
                 vout = int(v_out.read())
         except IOError:
             return 0
-        return float(vout / 1000)
+        return float(vout) / 1000
 
     def get_current(self):
         """
@@ -265,7 +263,7 @@ class Psu(PsuBase):
                 iout = int(i_out.read())
         except IOError:
             return 0
-        return float(iout / 1000)
+        return float(iout) / 1000
 
     def get_powergood_status(self):
         """

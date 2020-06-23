@@ -7,10 +7,6 @@ class PsuLed(PsuBase):
 
     def __init__(self):
         self._psu_list = []
-        STATUS_LED_COLOR_GREEN = "green"
-        STATUS_LED_COLOR_AMBER = "amber"
-        STATUS_LED_COLOR_RED = "red"
-        STATUS_LED_COLOR_OFF = "off"
         self.value_map = {
             "on": 1,
             "off": 0,

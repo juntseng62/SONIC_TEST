@@ -8,20 +8,17 @@
 #############################################################################
 
 import sys
-import re
-import os
-import subprocess
 import json
 
 try:
     from sonic_platform_base.chassis_base import ChassisBase
-    from sonic_platform.thermal import Thermal
-    from sonic_platform.fan_drawer import FanDrawer
-    from sonic_platform.fan import Fan
-    from sonic_platform.psu import Psu
-    from sonic_platform.sfp import Sfp
-    from sonic_platform.component import Component
-    from sonic_platform.led import *
+    from .thermal import Thermal
+    from .fan import Fan
+    from .psu import Psu
+    from .sfp import Sfp
+    from .component import Component
+    from .fan_drawer import FanDrawer
+    from .led import FanLed, PsuLed
 except ImportError as e:
     raise ImportError(str(e) + "- required module not found")
 
@@ -197,5 +194,5 @@ class Chassis(ChassisBase):
         return True, port_dict
 
     def get_thermal_manager(self):
-        from sonic_platform.thermal_manager import ThermalManager
+        from .thermal_manager import ThermalManager
         return ThermalManager

@@ -1,9 +1,7 @@
-import os
 from sonic_platform_base.sonic_thermal_control.thermal_manager_base import ThermalManagerBase
-from sonic_platform_base.sonic_thermal_control.thermal_policy import ThermalPolicy
-from sonic_platform.thermal_actions import *
-from sonic_platform.thermal_conditions import *
-from sonic_platform.thermal_infos import *
+from .thermal_actions import *
+from .thermal_conditions import *
+from .thermal_infos import *
 
 
 class ThermalManager(ThermalManagerBase):
