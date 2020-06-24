@@ -40,15 +40,10 @@ command:
     clean       : uninstall drivers and remove related sysfs nodes
 """
 
-import os
 import commands
 import sys, getopt
 import logging
-import re
 import time
-from collections import namedtuple
-
-
 
 
 PROJECT_NAME = 'snj60b0-320f'
@@ -221,16 +216,15 @@ def i2c_order_check():
     status, output = log_os_system("i2cdetect -l | grep I801 | grep i2c-0", 0)
     if  not output:
         order = 1
-        tmp = "sed -i 's/0-/1-/g' /usr/share/sonic/device/"+device_path+"/fancontrol"
-        status, output = log_os_system(tmp, 0)
         tmp = "sed -i 's/0-/1-/g' /usr/share/sonic/device/"+device_path+"/plugins/led_control.py"
-        status, output = log_os_system(tmp, 0)
     else:
         order = 0
-        tmp = "sed -i 's/1-/0-/g' /usr/share/sonic/device/"+device_path+"/fancontrol"
-        status, output = log_os_system(tmp, 0)
         tmp = "sed -i 's/1-/0-/g' /usr/share/sonic/device/"+device_path+"/plugins/led_control.py"
-    status, output = log_os_system(tmp, 0)       
+    status, output = log_os_system(tmp, 0)
+    if status:
+        print output
+        if FORCE == 0:
+            return status
     return order
                      
 def device_install():
@@ -281,16 +275,16 @@ def device_install():
                 if FORCE == 0:                
                     return status
         status, output =log_os_system("echo 0 > /sys/bus/i2c/devices/0-"+FPGAAddr+"/sys_reset1", 1)
-	if status:
-	    print output
-	    if FORCE == 0:
-	        return status
+    	if status:
+    	    print output
+    	    if FORCE == 0:
+    	        return status
 
         status, output =log_os_system("echo 4 > /sys/bus/i2c/devices/0-"+FPGAAddr+"/sys_reset2", 1)
         if status:
-	    print output
-	    if FORCE == 0:
-	        return status
+    	    print output
+    	    if FORCE == 0:
+    	        return status
 
     for i in range(0, devMaxPort):
         index = i / cpldPortNum
