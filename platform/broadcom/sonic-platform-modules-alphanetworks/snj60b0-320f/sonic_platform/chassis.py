@@ -19,6 +19,7 @@ try:
     from .component import Component
     from .fan_drawer import FanDrawer
     from .led import FanLed, PsuLed
+    import device_led
 except ImportError as e:
     raise ImportError(str(e) + "- required module not found")
 
@@ -29,6 +30,7 @@ SFP_STATUS_REMOVED = '0'
 NUM_THERMAL = 3
 NUM_FANDRAWER = 6
 NUM_FANSPERDRAWER = 2
+NUM_FAN = NUM_FANDRAWER * NUM_FANSPERDRAWER
 NUM_PSU = 2
 NUM_SFP = 34
 NUM_COMPONENT = 3
@@ -48,25 +50,23 @@ class Chassis(ChassisBase):
         for index in range(0, NUM_THERMAL):
             thermal = Thermal(index)
             self._thermal_list.append(thermal)
-        self.fanled = FanLed()
+        device_led.FANLED = FanLed()
         for index in range(0, NUM_FANDRAWER):
             fan_drawer = FanDrawer(index)
             for i in range(0, NUM_FANSPERDRAWER):
                 fan_index = NUM_FANSPERDRAWER * index + i
                 fan = Fan(fan_index)
-                fan.fanled = self.fanled
+                device_led.FANLED.add_fan(fan)
                 fan_drawer._fan_list.append(fan)
                 self._fan_list.append(fan)
-                self.fanled._fan_list.append(fan)
             self._fan_drawer_list.append(fan_drawer)
-        self.fanled.update_status()
-        self.psuled = PsuLed()
+        device_led.FANLED.update_status()
+        device_led.PSULED = PsuLed()
         for index in range(0, NUM_PSU):
             psu = Psu(index)
-            psu.psuled = self.psuled
             self._psu_list.append(psu)
-            self.psuled._psu_list.append(psu)
-        self.psuled.update_status()
+            device_led.PSULED.add_psu(psu)
+        device_led.PSULED.update_status()
         for index in range(0, NUM_SFP):
             if (index < 32):
                 sfp = Sfp(index, 'QSFP')
@@ -194,5 +194,5 @@ class Chassis(ChassisBase):
         return True, port_dict
 
     def get_thermal_manager(self):
-        from .thermal_manager import ThermalManager
+        from .sonic_thermal_control.thermal_manager import ThermalManager
         return ThermalManager

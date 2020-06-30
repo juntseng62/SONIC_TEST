@@ -23,12 +23,10 @@ class Fan(FanBase):
     FANS_PERTRAY = 2
     BASE_VAL_PATH = '/sys/bus/i2c/devices/0-005e/{0}'
     FAN_DUTY_PATH = '/sys/bus/i2c/devices/0-005e/fan_pwm'
-    fanled = None
 
     def __init__(self, fan_index):
         self.index = fan_index + 1
         FanBase.__init__(self)
-        self.fanled = None
         
         self.fantray_index = (fan_index)/self.FANS_PERTRAY + 1
         self.fan_index_intray = self.index - ((self.fantray_index-1)*self.FANS_PERTRAY)
@@ -210,7 +208,8 @@ class Fan(FanBase):
         Returns:
             bool: True if status LED state is set successfully, False if not
         """
-        return self.fanled.update_status()
+        import device_led
+        return device_led.FANLED.update_status()
 
     def get_status_led(self):
         """
@@ -219,4 +218,5 @@ class Fan(FanBase):
         Returns:
             A string, one of the predefined STATUS_LED_COLOR_* strings above
         """
-        return self.fanled.get_status()
+        import device_led
+        return device_led.FANLED.get_status()

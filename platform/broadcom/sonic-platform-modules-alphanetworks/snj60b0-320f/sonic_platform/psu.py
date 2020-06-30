@@ -83,10 +83,8 @@ class PsuFan(FanBase):
 
 class Psu(PsuBase):
     """Platform-specific PSU class"""
-    psuled = None
     def __init__(self, psu_index):
         PsuBase.__init__(self)
-        self.psuled = None
         fan = PsuFan(psu_index)
         self._fan_list.append(fan)
         self.index = psu_index + 1
@@ -305,7 +303,8 @@ class Psu(PsuBase):
         Returns:
             bool: True if status LED state is set successfully, False if not
         """
-        return self.psuled.update_status()
+        import device_led
+        return device_led.PSULED.update_status()
 
     def get_status_led(self):
         """
@@ -314,4 +313,5 @@ class Psu(PsuBase):
         Returns:
             A string, one of the predefined STATUS_LED_COLOR_* strings above
         """
-        return self.psuled.get_status()
+        import device_led
+        return device_led.PSULED.get_status()
