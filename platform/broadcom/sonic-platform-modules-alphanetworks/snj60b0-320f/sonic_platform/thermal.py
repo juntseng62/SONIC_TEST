@@ -15,7 +15,7 @@ try:
 except ImportError as e:
     raise ImportError(str(e) + "- required module not found")
 
-class Thermal(ThermalBase):
+class Alpha_Thermal(ThermalBase):
     """Platform-specific Thermal class"""
 
     temp_node_map = {

@@ -12,13 +12,14 @@ import json
 
 try:
     from sonic_platform_base.chassis_base import ChassisBase
-    from .thermal import Thermal
-    from .fan import Fan
-    from .psu import Psu
-    from .sfp import Sfp
-    from .component import Component
-    from .fan_drawer import FanDrawer
-    from .led import FanLed, PsuLed
+    from .fan import Alpha_Fan as Fan
+    from .psu import Alpha_Psu as Psu
+    from .sfp import Alpha_Sfp as Sfp
+    from .thermal import Alpha_Thermal as Thermal
+    from .component import Alpha_Component as Component
+    from .fan_drawer import Alpha_FanDrawer as FanDrawer
+    from .led import Alpha_FanLed as FanLed
+    from .led import Alpha_PsuLed as PsuLed
     import device_led
 except ImportError as e:
     raise ImportError(str(e) + "- required module not found")

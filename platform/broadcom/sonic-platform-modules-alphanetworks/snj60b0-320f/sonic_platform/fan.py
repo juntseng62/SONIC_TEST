@@ -12,7 +12,7 @@ try:
 except ImportError as e:
     raise ImportError(str(e) + "- required module not found")
 
-class Fan(FanBase):
+class Alpha_Fan(FanBase):
     """Platform-specific Fan class"""
 
     FAN_MOD_NAME = 'snj60b0_320f_fpga'

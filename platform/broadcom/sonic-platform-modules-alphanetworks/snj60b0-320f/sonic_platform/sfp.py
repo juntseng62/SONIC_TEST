@@ -138,7 +138,7 @@ SFP_PATH = "/sys/bus/i2c/devices/{0}-005f"
 SFPPLUS_PATH = "/sys/bus/i2c/devices/{0}-005e"
 SFPPLUS_EEPROM_PATH = "/sys/bus/i2c/devices/{0}-0050"
 
-class Sfp(SfpBase):
+class Alpha_Sfp(SfpBase):
     """Platform-specific Sfp class"""
     _port_start = 0
     _port_end = 34

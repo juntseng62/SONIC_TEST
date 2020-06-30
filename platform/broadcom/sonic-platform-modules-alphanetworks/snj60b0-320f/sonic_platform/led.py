@@ -52,9 +52,9 @@ class Led(object):
         return self.color_map[status]
 
 
-class PsuLed(Led):
+class Alpha_PsuLed(Led):
     def __init__(self):
-        super(PsuLed, self).__init__()
+        super(Alpha_PsuLed, self).__init__()
         self.led_path = self._path + "sys_pwr"
     
     def add_psu(self, psu):
@@ -73,9 +73,9 @@ class PsuLed(Led):
         return status
 
 
-class FanLed(Led):
+class Alpha_FanLed(Led):
     def __init__(self):
-        super(FanLed, self).__init__()
+        super(Alpha_FanLed, self).__init__()
         self.led_path = self._path + "fan1_led"
 
     def add_fan(self, fan):

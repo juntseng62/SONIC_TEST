@@ -81,7 +81,7 @@ class PsuFan(FanBase):
 
         return self.FAN_DIRECTION_EXHAUST
 
-class Psu(PsuBase):
+class Alpha_Psu(PsuBase):
     """Platform-specific PSU class"""
     def __init__(self, psu_index):
         PsuBase.__init__(self)
