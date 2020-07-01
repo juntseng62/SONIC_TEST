@@ -20,7 +20,6 @@ try:
     from .fan_drawer import Alpha_FanDrawer as FanDrawer
     from .led import Alpha_FanLed as FanLed
     from .led import Alpha_PsuLed as PsuLed
-    import device_led
 except ImportError as e:
     raise ImportError(str(e) + "- required module not found")
 
@@ -44,36 +43,49 @@ class Chassis(ChassisBase):
     # available on the chassis
     _sfp_list = None
 
+    # Leds
+    PSULED = None
+    FANLED = None
+
     def __init__(self):
         self._sfp_list = []
 
         ChassisBase.__init__(self)
+        # initialize thermals
         for index in range(0, NUM_THERMAL):
             thermal = Thermal(index)
             self._thermal_list.append(thermal)
-        device_led.FANLED = FanLed()
+
+        # initialize fans, fanled
+        Chassis.FANLED = FanLed()
         for index in range(0, NUM_FANDRAWER):
             fan_drawer = FanDrawer(index)
             for i in range(0, NUM_FANSPERDRAWER):
                 fan_index = NUM_FANSPERDRAWER * index + i
                 fan = Fan(fan_index)
-                device_led.FANLED.add_fan(fan)
+                Chassis.FANLED.add_fan(fan)
                 fan_drawer._fan_list.append(fan)
                 self._fan_list.append(fan)
             self._fan_drawer_list.append(fan_drawer)
-        device_led.FANLED.update_status()
-        device_led.PSULED = PsuLed()
+        Chassis.FANLED.update_status()
+
+        # initialize psus, psuled
+        Chassis.PSULED = PsuLed()
         for index in range(0, NUM_PSU):
             psu = Psu(index)
             self._psu_list.append(psu)
-            device_led.PSULED.add_psu(psu)
-        device_led.PSULED.update_status()
+            Chassis.PSULED.add_psu(psu)
+        Chassis.PSULED.update_status()
+
+        # initialize sfps
         for index in range(0, NUM_SFP):
             if (index < 32):
                 sfp = Sfp(index, 'QSFP')
             else:
                 sfp = Sfp(index, 'SFP')
             self._sfp_list.append(sfp)
+
+        # initialize component
         for index in range(0, NUM_COMPONENT):
             component = Component(index)
             self._component_list.append(component)
@@ -197,3 +209,11 @@ class Chassis(ChassisBase):
     def get_thermal_manager(self):
         from .sonic_thermal_control.thermal_manager import ThermalManager
         return ThermalManager
+
+    @classmethod
+    def get_psuled(cls):
+        return cls.PSULED
+
+    @classmethod
+    def get_fanled(cls):
+        return cls.FANLED

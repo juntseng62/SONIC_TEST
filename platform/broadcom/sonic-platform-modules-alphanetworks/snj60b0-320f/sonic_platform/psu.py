@@ -303,8 +303,9 @@ class Alpha_Psu(PsuBase):
         Returns:
             bool: True if status LED state is set successfully, False if not
         """
-        import device_led
-        return device_led.PSULED.update_status()
+        from .platform import Chassis
+        psuled = Chassis.get_psuled()
+        return psuled.update_status()
 
     def get_status_led(self):
         """
@@ -313,5 +314,6 @@ class Alpha_Psu(PsuBase):
         Returns:
             A string, one of the predefined STATUS_LED_COLOR_* strings above
         """
-        import device_led
-        return device_led.PSULED.get_status()
+        from .chassis import Chassis
+        psuled = Chassis.get_psuled()
+        return psuled.get_status()

@@ -208,8 +208,9 @@ class Alpha_Fan(FanBase):
         Returns:
             bool: True if status LED state is set successfully, False if not
         """
-        import device_led
-        return device_led.FANLED.update_status()
+        from .chassis import Chassis
+        fanled = Chassis.get_fanled()
+        return fanled.update_status()
 
     def get_status_led(self):
         """
@@ -218,5 +219,6 @@ class Alpha_Fan(FanBase):
         Returns:
             A string, one of the predefined STATUS_LED_COLOR_* strings above
         """
-        import device_led
-        return device_led.FANLED.get_status()
+        from .chassis import Chassis
+        fanled = Chassis.get_fanled()
+        return fanled.get_status()

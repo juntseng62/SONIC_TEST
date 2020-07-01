@@ -1,2 +1,0 @@
-PSULED = None
-FANLED = None
