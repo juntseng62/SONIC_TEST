@@ -207,7 +207,7 @@ class Chassis(ChassisBase):
         return True, port_dict
 
     def get_thermal_manager(self):
-        from .sonic_thermal_control.thermal_manager import ThermalManager
+        from .thermal_manager import ThermalManager
         return ThermalManager
 
     @classmethod
