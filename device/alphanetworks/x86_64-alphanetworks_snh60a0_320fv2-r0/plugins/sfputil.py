@@ -67,7 +67,7 @@ class SfpUtil(SfpUtilBase):
         bitmap = ""
 
         while (port >= self.port_start) and (port <= self.port_end):
-            index = (port % CPLD_PORT_NUM)
+            i2c_index = (port / CPLD_PORT_NUM) + 1
             index = (port % CPLD_PORT_NUM) + 1
             path = self.present_path
             port_path = path.format(self.port_to_i2cbus_mapping[i2c_index], (index + 1))
@@ -168,8 +168,8 @@ class SfpUtil(SfpUtilBase):
         if port_num < self.first_port or port_num > self.last_port:
             return False
 
-        index = (port_num % 8)
-        i2c_index = (port_num / 8) + 1
+        index = (port_num % CPLD_PORT_NUM)
+        i2c_index = (port_num / CPLD_PORT_NUM) + 1
         path = self.lpmode_path
         port_path = path.format(self.port_to_i2cbus_mapping[i2c_index], (index + 1))
 
@@ -192,8 +192,8 @@ class SfpUtil(SfpUtilBase):
         if port_num < self.first_port or port_num > self.last_port:
             return False
 
-        index = (port_num % 8)
-        i2c_index = (port_num / 8) + 1
+        index = (port_num % CPLD_PORT_NUM)
+        i2c_index = (port_num / CPLD_PORT_NUM) + 1
         path = self.lpmode_path
         port_path = path.format(self.port_to_i2cbus_mapping[i2c_index], (index + 1))
 
