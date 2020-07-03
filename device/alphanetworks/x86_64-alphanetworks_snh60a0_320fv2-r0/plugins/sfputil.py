@@ -132,7 +132,7 @@ class SfpUtil(SfpUtilBase):
 
         path = self.eeprom_path
         for x in range(self.first_port, self.last_port + 1):
-            index = (x % CPLD_PORT_NUM)
+            index = (x % CPLD_PORT_NUM) + 1
             i2c_index = (x / CPLD_PORT_NUM) + 1
             self.port_to_eeprom[x] = path.format(self.port_to_i2cbus_mapping[i2c_index], (index + 1))
         SfpUtilBase.__init__(self)
@@ -142,7 +142,7 @@ class SfpUtil(SfpUtilBase):
         if port_num < self.first_port or port_num > self.last_port:
             return False
 
-        index = (port_num % CPLD_PORT_NUM)
+        index = (port_num % CPLD_PORT_NUM) + 1
         i2c_index = (port_num / CPLD_PORT_NUM) + 1
         path = self.port_reset_path
         port_path = path.format(self.port_to_i2cbus_mapping[i2c_index], (index + 1))
@@ -217,20 +217,20 @@ class SfpUtil(SfpUtilBase):
         if port_num < self.port_start or port_num > self.port_end:
             return False
 
-        index = (port_num % CPLD_PORT_NUM)
         i2c_index = (port_num / CPLD_PORT_NUM) + 1
+        index = (port_num % CPLD_PORT_NUM) + 1
         path = self.present_path
         port_path = path.format(self.port_to_i2cbus_mapping[i2c_index], (index + 1))
 
           
         try:
             reg_file = open(port_path)
+
         except IOError as e:
             print "Error: unable to open file: %s" % str(e)
             return False
 
-        reg_value = reg_file.readline().rstrip()
-
+        reg_value = int(reg_file.readline().rstrip(), 16)
         reg_file.close()
 
         if reg_value == '1':

@@ -117,10 +117,10 @@ def system_led_check():
 		else:
 			f2.write("1")
 
-    return
+	return
 ##########
-    
-        
+		
+		
 class LedControl(LedControlBase):
     """Platform specific LED control class"""
     PORT_TABLE_PREFIX = "PORT_TABLE:"
