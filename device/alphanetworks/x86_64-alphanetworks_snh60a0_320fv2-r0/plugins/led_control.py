@@ -13,6 +13,7 @@
 
 import time
 
+
 class LedControlBase(object):
 #    __metaclass__ = abc.ABCMeta
 
@@ -21,7 +22,7 @@ class LedControlBase(object):
         """
         Called when port link state changes. Update port link state LED here.
 
-        :param port: A string, SONiC port name (e.shg., "Ethernet0")
+        :param port: A string, SONiC port name (e.g., "Ethernet0")
         :param state: A string, the port link state (either "up" or "down")
         """
         return
@@ -151,10 +152,10 @@ def system_led_check():
 		else:
 			f2.write("1")
 
-	return
+    return
 ##########
-		
-		
+    
+        
 class LedControl(LedControlBase):
     """Platform specific LED control class"""
     PORT_TABLE_PREFIX = "PORT_TABLE:"
