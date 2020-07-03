@@ -187,22 +187,22 @@ class LedControl(LedControlBase):
     # Constructor
     def __init__(self):
         # Initialize all front-panel status LEDs to green
+        with open("/sys/bus/i2c/devices/8-005f/sys_status", "w") as f:
+            f.write("1")
         with open("/sys/bus/i2c/devices/8-005f/sys_locator", "w") as f:
             f.write("0")
         with open("/sys/bus/i2c/devices/8-005f/sys_pwr", "w") as f:
             f.write("1")
-        with open("/sys/bus/i2c/devices/8-005f/sys_status", "w") as f:
-            f.write("1")
-
         # Initialize all fan LEDs to green
-        with open("/sys/bus/i2c/devices/8-005f/fan1_led", "w") as f:
-            f.write("1")
-        with open("/sys/bus/i2c/devices/8-005f/fan2_led", "w") as f:
+        with open("/sys/bus/i2c/devices/8-005f/fan4_led", "w") as f:
             f.write("1")
         with open("/sys/bus/i2c/devices/8-005f/fan3_led", "w") as f:
             f.write("1")
-        with open("/sys/bus/i2c/devices/8-005f/fan4_led", "w") as f:
+        with open("/sys/bus/i2c/devices/8-005f/fan2_led", "w") as f:
             f.write("1")
+        with open("/sys/bus/i2c/devices/8-005f/fan1_led", "w") as f:
+            f.write("1")
+
         sysled_task()	
 
         # Initialize: Turn all front panel QSFP LEDs off

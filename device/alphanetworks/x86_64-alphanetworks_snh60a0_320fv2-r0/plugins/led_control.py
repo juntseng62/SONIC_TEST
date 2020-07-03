@@ -241,6 +241,7 @@ class LedControl(LedControlBase):
             f.write("1")
         with open("/sys/bus/i2c/devices/9-005f/fan6_led", "w") as f:
             f.write("1")
+
         sysled_task()	
 
         # Initialize: Turn all front panel QSFP LEDs off
